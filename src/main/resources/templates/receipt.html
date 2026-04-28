@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Booking Receipt</title>
+<style>
+body{
+font-family:Arial;
+text-align:center;
+background:#f4f4f4;
+}
+.container{
+background:white;
+width:500px;
+margin:50px auto;
+padding:30px;
+border-radius:10px;
+box-shadow:0 3px 10px rgba(0,0,0,0.3);
+}
+button{
+padding:10px 20px;
+background:#27ae60;
+border:none;
+color:white;
+cursor:pointer;
+}
+</style>
+</head>
+<body>
+<div class="container">
+<h2>Booking Receipt</h2>
+<p><b>Name:</b> <span th:text="${booking.name}"></span></p>
+<p><b>Destination:</b> <span th:text="${booking.destination}"></span></p>
+<p><b>Hotel:</b> <span th:text="${booking.hotel}"></span></p>
+<p><b>Days:</b> <span th:text="${booking.days}"></span></p>
+<p><b>Total Price:</b> ₹ <span th:text="${booking.price}"></span></p>
+<button onclick="window.print()">Print Receipt</button>
+</div>
+</body>
+</html>

@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Tour Booking System</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+#topBtn{
+position:fixed;
+bottom:30px;
+right:30px;
+background:#ff416c;
+color:white;
+border:none;
+padding:12px 15px;
+border-radius:50%;
+font-size:18px;
+cursor:pointer;
+display:none;
+box-shadow:0px 5px 15px rgba(0,0,0,0.3);
+}
+/* GLOBAL */
+body{
+font-family:Arial;
+margin:0;
+background:#f4f4f4;
+}
+/* NAVBAR */
+nav{
+background:#2c3e50;
+padding:15px;
+text-align:center;
+}
+nav a{
+color:white;
+margin:15px;
+text-decoration:none;
+font-weight:bold;
+}
+nav button{
+padding:6px 10px;
+margin-left:20px;
+}
+/* HERO TITLE */
+.hero-text{
+position:absolute;
+top:120px;
+width:100%;
+text-align:center;
+color:white;
+font-size:42px;
+font-weight:bold;
+text-shadow:2px 2px 10px black;
+z-index:2;
+}
+.hero-text h1{
+letter-spacing:2px;
+text-shadow:0px 5px 20px rgba(0,0,0,0.6);
+}
+/* SLIDER */
+.slider{
+width:100%;
+height:400px;
+overflow:hidden;
+position:relative;
+}
+.slider::after{
+content:"";
+position:absolute;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.6));
+}
+.slides{
+display:flex;
+width:500%;
+animation:slide 20s infinite;
+}
+.slides{
+z-index:1;
+}
+.slides img{
+width:100%;
+height:400px;
+object-fit:cover;
+animation:zoom 20s infinite;
+}
+@keyframes slide{
+0%{margin-left:0%;}
+20%{margin-left:0%;}
+25%{margin-left:-100%;}
+45%{margin-left:-100%;}
+50%{margin-left:-200%;}
+70%{margin-left:-200%;}
+75%{margin-left:-300%;}
+90%{margin-left:-300%;}
+100%{margin-left:-400%;}
+}
+@keyframes fadeUp{
+0%{
+opacity:0;
+transform:translateY(30px);
+}
+100%{
+opacity:1;
+transform:translateY(0);
+}
+}
+@keyframes zoom{
+0%{
+transform:scale(1);
+}
+50%{
+transform:scale(1.1);
+}
+100%{
+transform:scale(1);
+}
+}
+/* SEARCH */
+.search-box{
+text-align:center;
+margin:30px;
+}
+.search-box input{
+padding:10px;
+width:250px;
+}
+/* DESTINATION CARDS */
+.cards{
+display:flex;
+flex-wrap:wrap;
+justify-content:center;
+gap:20px;
+margin:40px;
+}
+.card{
+background:white;
+width:260px;
+border-radius:10px;
+box-shadow:0px 4px 10px rgba(0,0,0,0.3);
+overflow:hidden;
+transition:0.4s;
+}
+.card{
+animation:fadeUp 0.8s ease;
+}
+.card:hover{
+transform:scale(1.05);
+}
+.card img{
+width:100%;
+height:160px;
+object-fit:cover;
+display:block;
+}
+.card-body{
+padding:15px;
+text-align:center;
+}
+button{
+background:#3498db;
+border:none;
+color:white;
+padding:8px 15px;
+border-radius:5px;
+cursor:pointer;
+}
+/* DARJEELING HOTELS */
+.hotels{
+display:flex;
+flex-wrap:wrap;
+justify-content:center;
+gap:20px;
+margin:40px;
+}
+.hotel-card{
+width:250px;
+background:white;
+border-radius:10px;
+box-shadow:0px 4px 10px rgba(0,0,0,0.3);
+overflow:hidden;
+}
+.hotel-card img{
+width:100%;
+height:160px;
+object-fit:cover;
+}
+.hotel-card h4{
+text-align:center;
+padding:10px;
+}
+/* ABOUT */
+.about{
+background:white;
+padding:40px;
+margin:40px;
+text-align:center;
+}
+/* CUSTOMER SERVICE */
+.service{
+background:#ecf0f1;
+padding:40px;
+text-align:center;
+}
+/* GALLERY */
+.gallery{
+display:flex;
+flex-wrap:wrap;
+justify-content:center;
+gap:15px;
+margin:40px;
+}
+.gallery img{
+width:240px;
+height:150px;
+object-fit:cover;
+border-radius:8px;
+transition:0.3s;
+}
+.gallery img:hover{
+transform:scale(1.1);
+}
+/* VIDEO */
+.video{
+text-align:center;
+margin:40px;
+}
+/* FOOTER */
+footer{
+background:linear-gradient(90deg,#1e3c72,#2a5298);
+color:white;
+text-align:center;
+padding:40px;
+font-size:16px;
+}
+/* DARK MODE */
+.dark{
+background:#121212;
+color:white;
+}
+.dark nav{
+background:black;
+}
+.dark .card{
+background:#1e1e1e;
+color:white;
+}
+/* ABOUT US GRADIENT */
+.about{
+background:linear-gradient(135deg,#6dd5fa,#1987d1);
+color:white;
+padding:60px 20px;
+margin:40px 0;
+text-align:center;
+border-radius:10px;
+}
+/* CUSTOMER SERVICE GRADIENT */
+.service{
+background:linear-gradient(135deg,#fca0a3,#fad0c4);
+padding:60px 20px;
+margin:40px 0;
+text-align:center;
+border-radius:10px;
+}
+.service h2{
+color:#2c3e50;
+}
+.service p{
+font-size:18px;
+}
+/* RESPONSIVE */
+@media(max-width:768px){
+.cards{
+flex-direction:column;
+align-items:center;
+}
+.slider{
+height:250px;
+}
+.slides img{
+height:250px;
+}
+}
+</style>
+</head>
+<script>
+window.onload=function(){
+alert("Welcome to TravelSphere 🌍 - Your Gateway to Amazing Travel Experiences!");
+}
+</script>
+<button onclick="scrollToTop()" id="topBtn">⬆</button>
+<body>
+<nav style="display:flex; justify-content:space-between; align-items:center; padding:15px 40px; background:#2c3e50;">
+<!-- LOGO + BRAND -->
+<div style="display:flex; align-items:center; gap:10px;">
+<span style="font-size:28px;">🌍</span>
+<h2 style="color:white; margin:0; font-weight:bold;">
+TravelSphere
+</h2>
+</div>
+<!-- MENU -->
+<div>
+<a href="/" style="color:white; margin-right:20px; text-decoration:none; font-weight:bold;">Home</a>
+<a href="/itinerary" style="color:white; margin-right:20px; text-decoration:none; font-weight:bold;">Tour Plan</a>
+<a href="/login" style="color:white; margin-right:20px; text-decoration:none; font-weight:bold;">Admin Login</a>
+<a href="/admin" style="color:white; margin-right:20px; text-decoration:none; font-weight:bold;">Dashboard</a>
+<button onclick="toggleTheme()" style="padding:6px 12px;">
+Toggle Theme
+</button>
+</div>
+</nav>
+<!-- IMAGE SLIDER -->
+<div class="slider">
+<div class="hero-text">
+<h1 style="font-size:65px; font-weight:bold;">🌍 TravelSphere</h1>
+<p style="font-size:26px;">
+Explore The World <br>
+Book Your Dream Tour Today!
+</p>
+<p style="font-size:18px;">
+Your Gateway to Amazing Travel Experiences
+</p>
+<div style="
+background:rgba(255,255,255,0.9);
+backdrop-filter:blur(10px);
+padding:18px;
+border-radius:15px;
+width:520px;
+margin:25px auto;
+box-shadow:0px 10px 30px rgba(0,0,0,0.35);
+">
+<input id="searchHero" type="text" placeholder="Where do you want to travel?"
+style="
+padding:12px;
+width:60%;
+border:none;
+outline:none;
+font-size:16px;
+border-radius:10px;
+">
+<button onclick="searchFromHero()"
+style="
+padding:12px 22px;
+background:linear-gradient(45deg,#ff416c,#ff4b2b);
+border:none;
+color:white;
+border-radius:25px;
+cursor:pointer;
+font-weight:bold;
+font-size:15px;
+">
+Search
+</button>
+</div>
+</div>
+<div class="slides">
+<img src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=2000">
+<img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=2000">
+<img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=2000">
+<img src="https://images.unsplash.com/photo-1470770841072-f978cf4d019e?w=2000">
+<img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=2000">
+</div>
+</div>
+<!-- SEARCH -->
+<div style="
+background:rgba(255,255,255,0.95);
+backdrop-filter:blur(10px);
+padding:20px;
+border-radius:20px;
+width:600px;
+margin:25px auto;
+box-shadow:0px 12px 35px rgba(0,0,0,0.35);
+display:flex;
+align-items:center;
+justify-content:space-between;
+gap:10px;
+">
+<span style="font-size:20px;">📍</span>
+<input id="searchHero" type="text" placeholder="Search destinations like Goa, Manali..."
+style="
+flex:1;
+padding:12px;
+border:none;
+outline:none;
+font-size:16px;
+border-radius:10px;
+">
+<button onclick="searchFromHero()" style="
+padding:12px 25px;
+background:linear-gradient(45deg,#ff416c,#ff4b2b);
+border:none;
+color:white;
+border-radius:30px;
+cursor:pointer;
+font-weight:bold;
+font-size:15px;
+">
+🔍 Search
+</button>
+</div>
+<!-- DESTINATIONS -->
+<div class="cards">
+<div class="card">
+<img src="https://media.istockphoto.com/id/535168027/photo/india-goa-palolem-beach.webp?a=1&b=1&s=612x612&w=0&k=20&c=C0XaAWEkus7pLTGKZOy75Mu0P4VoVorNAWsxY5faLMA=">
+<div class="card-body">
+<h3>Goa</h3>
+<a href="/destination-hotels?place=Goa"><button>Book Now</button></a>
+</div>
+</div>
+<div class="card">
+<img src="https://images.unsplash.com/photo-1609947017136-9daf32a5eb16">
+<div class="card-body">
+<h3>Manali</h3>
+<a href="/destination-hotels?place=Manali"><button>Book Now</button></a>
+</div>
+</div>
+<div class="card">
+<img src="https://images.unsplash.com/photo-1671711847762-b8308b444a42?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D">
+<div class="card-body">
+<h3>Darjeeling</h3>
+<a href="/destination-hotels?place=Darjeeling"><button>Book Now</button></a>
+</div>
+</div>
+<div class="card">
+<img src="https://images.unsplash.com/photo-1599661046289-e31897846e41">
+<div class="card-body">
+<h3>Rajasthan</h3>
+<a href="/destination-hotels?place=Rajasthan"><button>Book Now</button></a>
+</div>
+</div>
+<div class="card">
+<img src="https://images.unsplash.com/photo-1501785888041-af3ef285b470">
+<div class="card-body">
+<h3>Andaman</h3>
+<a href="/destination-hotels?place=Andaman"><button>Book Now</button></a>
+</div>
+</div>
+<div class="card">
+<img src="https://images.unsplash.com/photo-1595815771614-ade9d652a65d">
+<div class="card-body">
+<h3>Kashmir</h3>
+<a href="/destination-hotels?place=Kashmir"><button>Book Now</button></a>
+</div>
+</div>
+</div>
+<!-- DARJEELING HOTELS -->
+<h2 style="text-align:center">Top Hotels in Darjeeling</h2>
+<div class="hotels">
+<div class="hotel-card">
+<img src="https://images.unsplash.com/photo-1566073771259-6a8506099945">
+<h4>Mayfair Darjeeling</h4>
+</div>
+<div class="hotel-card">
+<img src="https://images.unsplash.com/photo-1582719508461-905c673771fd">
+<h4>Windamere Hotel</h4>
+</div>
+<div class="hotel-card">
+<img src="https://images.unsplash.com/photo-1618773928121-c32242e63f39">
+<h4>Summit Swiss Heritage</h4>
+</div>
+</div>
+<!-- ABOUT US -->
+<div class="about">
+<h2>About Us</h2>
+<p>
+Tour Booking System helps travelers discover the best destinations across India.
+We provide easy hotel booking, guided tour packages and affordable travel plans.
+Our mission is to make travel simple, safe and memorable.
+</p>
+</div>
+<!-- CUSTOMER SERVICE -->
+<div class="service">
+<h2>Customer Service</h2>
+<p>24/7 Customer Support Available</p>
+<p>Phone: +91 9800193741</p>
+<p>Email: support@tourbooking.com</p>
+</div>
+<!-- GALLERY -->
+<h2 style="text-align:center">Destination Gallery</h2>
+<div class="gallery">
+<img src="https://media.istockphoto.com/id/535168027/photo/india-goa-palolem-beach.webp?a=1&b=1&s=612x612&w=0&k=20&c=C0XaAWEkus7pLTGKZOy75Mu0P4VoVorNAWsxY5faLMA=">
+<img src="https://images.unsplash.com/photo-1712388430474-ace0c16051e2?q=80&w=1074&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D">
+<img src="https://images.unsplash.com/photo-1671711847762-b8308b444a42?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D">
+<img src="https://images.unsplash.com/photo-1477587458883-47145ed94245?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8UmFqYXN0aGFufGVufDB8fDB8fHww">
+<img src="https://images.unsplash.com/photo-1627894485200-b92fb4353967?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D">
+<img src="https://images.unsplash.com/photo-1586053226626-febc8817962f?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8QW5kYW1hbnxlbnwwfHwwfHx8MA%3D%3D">
+</div>
+<!-- VIDEO -->
+<div class="video">
+<h2>Travel Inspiration</h2>
+<iframe width="700" height="400"
+src="https://www.youtube.com/embed/Scxs7L0vhZ4"
+frameborder="0"
+allowfullscreen>
+</iframe>
+</div>
+<!-- FOOTER -->
+<footer>
+<p>Customer Support: +91 9876543210</p>
+<p>Email: support@tourbooking.com</p>
+<p>Follow us: Facebook | Instagram | Twitter</p>
+<p>© 2026 TravelSphere - All Rights Reserved</p>
+</footer>
+<script>
+function searchDestination(){
+let input=document.getElementById("search").value.toLowerCase();
+let cards=document.getElementsByClassName("card");
+for(let i=0;i<cards.length;i++){
+let text=cards[i].innerText.toLowerCase();
+if(text.includes(input)){
+cards[i].style.display="block";
+}else{
+cards[i].style.display="none";
+}
+}
+}
+function searchFromHero(){
+let input=document.getElementById("searchHero").value.toLowerCase();
+let cards=document.getElementsByClassName("card");
+for(let i=0;i<cards.length;i++){
+let text=cards[i].innerText.toLowerCase();
+if(text.includes(input)){
+cards[i].style.display="block";
+}else{
+cards[i].style.display="none";
+}
+}
+document.querySelector(".cards").scrollIntoView({
+behavior:"smooth"
+});
+}
+window.onscroll=function(){
+let btn=document.getElementById("topBtn");
+if(document.body.scrollTop>300 || document.documentElement.scrollTop>300){
+btn.style.display="block";
+}else{
+btn.style.display="none";
+}
+}
+function scrollToTop(){
+window.scrollTo({top:0,behavior:"smooth"});
+}
+function toggleTheme(){
+document.body.classList.toggle("dark");
+}
+</script>
+</script>
+</body>
+</html>
